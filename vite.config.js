@@ -10,7 +10,8 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    vueDevTools(),
+    // eslint-disable-next-line no-undef
+    process.env.VITEST ? null : vueDevTools(),
   ],
   resolve: {
     alias: {
