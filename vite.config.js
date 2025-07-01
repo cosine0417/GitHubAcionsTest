@@ -1,21 +1,17 @@
+// vite.config.js
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     vue(),
     vueJsx(),
-    // eslint-disable-next-line no-undef
-    process.env.VITEST ? null : vueDevTools(),
+    ...(mode === 'test' ? [] : [vueDevTools()]),  // 🔺 Vitest 時 (mode==='test') 不載入
   ],
   resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
-})
+}))
